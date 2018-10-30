@@ -7,3 +7,10 @@ export const dummyAction = () => {
     type: DUMMY_ACTION
   };
 };
+
+export {
+  clientRegistration,
+  requestToken,
+  authorizeToken,
+  accessToken
+} from './oauth.actions';

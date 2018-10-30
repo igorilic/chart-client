@@ -6,10 +6,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-           Discovergy Demo Client
-        </header>
-        <LineComponent />
+        <div className="App-container">
+          <header className="App-header">Discovergy Demo Client</header>
+          <div className="App-chart">
+            <LineComponent />
+          </div>
+        </div>
       </div>
     );
   }

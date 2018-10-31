@@ -52,7 +52,8 @@ export const clientRegistration = () => {
       ...config,
       headers: {
         ...config.headers,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Headers': '*'
       }
     };
     const data = qs.stringify({
@@ -118,7 +119,8 @@ export const requestToken = (oauthHeaders, consumerSecret) => {
       ...config,
       headers: {
         ...config.headers,
-        'Authorization': authorizationHeaders
+        'Authorization': authorizationHeaders,
+        'Access-Control-Allow-Origin':'*'
       }
     };
 
@@ -183,7 +185,7 @@ const accessTokenFailure = (error) => {
   }
 }
 
-export const accessToken = (oauthHeaders, consumerSecret) => {
+export const accessToken = (oauthHeaders, consumerSecret, tokenSecret) => {
   return dispatch => {
     dispatch({
       type: AUTH_ACCESS_TOKEN_REQUEST
@@ -197,13 +199,13 @@ export const accessToken = (oauthHeaders, consumerSecret) => {
       oauth_timestamp: timestamp,
     };
     delete parameters.oauth_signature;
-    const sig = oauthSignature.generate('POST', url, parameters, consumerSecret);
+    const sig = oauthSignature.generate('POST', url, parameters, consumerSecret, tokenSecret);
     parameters.oauth_signature = sig;
     let oAuth = [];
     Object.keys(parameters).forEach(key => {
       oAuth.push(`${key}="${parameters[key]}"`)
     });
-    const authorizationHeaders = `OAuth ${oAuth.join(',')}`;
+    const authorizationHeaders = `OAuth ${oAuth.join(', ')}`;
     const configRequestHeaders = {
       ...config,
       headers: {

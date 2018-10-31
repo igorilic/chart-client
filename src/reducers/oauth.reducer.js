@@ -137,7 +137,8 @@ export const oauth = (state = initialState, action) => {
           oauthHeaders: {
             ...state.oauthHeaders,
             oauth_token: tokenArr[1]
-          }
+          },
+          isFetching: false
         }
       }
     default:

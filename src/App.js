@@ -27,7 +27,7 @@ class App extends Component {
     await this.props.clientRegistration();
     await this.props.requestToken(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret);
     await this.props.authorizeToken(this.props.oauth.responseRequestToken.oauth_token);
-    await this.props.accessToken(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret);
+    await this.props.accessToken(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseRequestToken.oauth_token_secret);
   }
 
   render() {

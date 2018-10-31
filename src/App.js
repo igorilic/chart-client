@@ -11,14 +11,16 @@ import {
   clientRegistration,
   requestToken,
   authorizeToken,
-  accessToken
+  accessToken,
+  metersFetch,
 } from './actions';
 
 const actions = {
   clientRegistration,
   requestToken,
   authorizeToken,
-  accessToken
+  accessToken,
+  metersFetch,
 };
 
 class App extends Component {
@@ -30,40 +32,40 @@ class App extends Component {
     await this.props.accessToken(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseRequestToken.oauth_token_secret);
   }
 
+  getMeters() {
+    this.props.metersFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret)
+  }
+
   render() {
     const {
       responseRegistration,
       isFetching
     } = this.props.oauth;
-    return ( <
-      div className = "App" >
-      <
-      div className = "App-container" >
-      <
-      header className = "App-header" > Discovergy Demo Client < /header> {
-        isFetching
-          ?
-          < div > Loading... < /div> :
-          < p > {
-            responseRegistration.key
-          } < /p>
-      } <
-      div className = "App-chart" >
-      <
-      LineComponent / >
-      <
-      /div> <
-      /div> <
-      /div>
+    return (
+        <div className = "App">
+          <div className = "App-container" >
+            <header className = "App-header"> Discovergy Demo Client </header>
+            <button onClick={this.getMeters.bind(this)}>Press me</button>
+            {isFetching 
+              ? <div>Loading...</div>
+              : <p> {responseRegistration.key}</p>
+            }
+            <div className = "App-chart">
+              <LineComponent />
+            </div>
+          </div>
+        </div>
     );
   }
 }
 
 function mapStateToProps({
-  oauth
+  oauth,
+  meters
 }) {
   return {
-    oauth
+    oauth,
+    meters
   };
 }
 

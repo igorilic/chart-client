@@ -17,3 +17,8 @@ export const AUTH_AUTHORIZE_TOKEN_FAILURE = '[AUTH] Authorize Token Failure';
 export const AUTH_ACCESS_TOKEN_REQUEST = '[AUTH] Access Token Request';
 export const AUTH_ACCESS_TOKEN_SUCCESS = '[AUTH] Access Token Success';
 export const AUTH_ACCESS_TOKEN_FAILURE = '[AUTH] Access Token Failure';
+
+// meters
+export const METERS_FETCH_REQUEST = '[METERS] Fetch Request';
+export const METERS_FETCH_SUCCESS = '[METERS] Fetch Success';
+export const METERS_FETCH_FAILURE = '[METERS] Fetch Failure';

@@ -52,8 +52,7 @@ export const clientRegistration = () => {
       ...config,
       headers: {
         ...config.headers,
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Access-Control-Allow-Headers': '*'
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     };
     const data = qs.stringify({

@@ -16,5 +16,7 @@ export {
 } from './oauth.actions';
 
 export {
-  metersFetch
+  metersFetch,
+  fieldsFetch,
+  readingFetch,
 } from './meters';

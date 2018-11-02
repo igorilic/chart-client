@@ -22,3 +22,14 @@ export const AUTH_ACCESS_TOKEN_FAILURE = '[AUTH] Access Token Failure';
 export const METERS_FETCH_REQUEST = '[METERS] Fetch Request';
 export const METERS_FETCH_SUCCESS = '[METERS] Fetch Success';
 export const METERS_FETCH_FAILURE = '[METERS] Fetch Failure';
+
+// readings
+export const READINGS_FETCH_REQUEST = '[READINGS] Fetch Request';
+export const READINGS_FETCH_SUCCESS = '[READINGS] Fetch Success';
+export const READINGS_FETCH_FAILURE = '[READINGS] Fetch Failure';
+
+// fields
+export const FIELDS_FETCH_REQUEST = '[FIELDS] Fetch Request';
+export const FIELDS_FETCH_SUCCESS = '[FIELDS] Fetch Success';
+export const FIELDS_FETCH_FAILURE = '[FIELDS] Fetch Failure';
+

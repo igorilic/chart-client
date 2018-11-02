@@ -13,6 +13,8 @@ import {
   authorizeToken,
   accessToken,
   metersFetch,
+  fieldsFetch,
+  readingFetch,
 } from './actions';
 
 const actions = {
@@ -21,11 +23,17 @@ const actions = {
   authorizeToken,
   accessToken,
   metersFetch,
+  fieldsFetch,
+  readingFetch,
 };
 
 class App extends Component {
 
   async componentDidMount() {
+    this.auth();   
+  }
+
+  async auth() {
     await this.props.clientRegistration();
     await this.props.requestToken(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret);
     await this.props.authorizeToken(this.props.oauth.responseRequestToken.oauth_token);
@@ -33,8 +41,14 @@ class App extends Component {
   }
 
   getMeters() {
-    this.props.metersFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret)
+    this.props.metersFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret);
   }
+
+  getReadings() {
+    debugger;
+    this.props.readingFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret, this.props.meters.meters[0].meterId)
+  }
+
 
   render() {
     const {
@@ -46,9 +60,9 @@ class App extends Component {
           <div className = "App-container" >
             <header className = "App-header"> Discovergy Demo Client </header>
             <button onClick={this.getMeters.bind(this)}>Press me</button>
-            {isFetching 
-              ? <div>Loading...</div>
-              : <p> {responseRegistration.key}</p>
+            {this.props.meters.meters.length
+              ? <button onClick={this.getReadings.bind(this)}>Press me</button>
+              : <p>Get meters first</p>
             }
             <div className = "App-chart">
               <LineComponent />

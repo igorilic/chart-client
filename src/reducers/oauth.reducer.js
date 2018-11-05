@@ -11,9 +11,17 @@ import {
   // AUTH_REQUEST_TOKEN_FAILURE,
   AUTH_REQUEST_TOKEN_REQUEST,
   AUTH_REQUEST_TOKEN_SUCCESS,
+  AUTH_FORM_CHANGE,
+  AUTH_SET_AUTH_STATE,
 } from '../constants';
 
 export const initialState = {
+  form: {
+    username: '',
+    password: ''
+  },
+  cookie: {},
+  loggedIn: false,
   isFetching: false,
   oauthHeaders: {
     oauth_verifier: '',
@@ -48,6 +56,20 @@ export const initialState = {
 
 export const oauth = (state = initialState, action) => {
   switch (action.type) {
+    case AUTH_SET_AUTH_STATE:
+      return {
+        ...state,
+        loggedIn: action.payload.state === 'login' ? true : false
+      }
+    case AUTH_FORM_CHANGE:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          username: action.payload.id === 'username' ? action.payload.value : state.form.username,
+          password: action.payload.id === 'password' ? action.payload.value : state.form.password,
+        }
+      }
     case AUTH_CLIENT_REGISTRATION_REQUEST:
       return {
         ...state,
@@ -138,7 +160,8 @@ export const oauth = (state = initialState, action) => {
             ...state.oauthHeaders,
             oauth_token: tokenArr[1]
           },
-          isFetching: false
+          isFetching: false,
+          loggedIn: true
         }
       }
     default:

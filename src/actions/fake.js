@@ -25,7 +25,7 @@ export const readingFetch = (color) => {
     axios.get('fake/power.json')
       .then(
         response => {
-          dispatch(readingsFetchSuccess(response.data.result, color)); 
+          dispatch(readingsFetchSuccess(response.data.result[0].values)); 
         },
         error => dispatch(readingsFetchFailure(error))
       );

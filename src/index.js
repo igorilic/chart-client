@@ -5,11 +5,14 @@ import configureStore from './store';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
-  <Provider store={configureStore()}>
-    <App />
-  </Provider>,
+  <CookiesProvider>
+    <Provider store={configureStore()}>
+      <App />
+    </Provider>
+  </CookiesProvider>,
   document.getElementById('root')
 );
 

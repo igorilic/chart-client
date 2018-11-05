@@ -12,7 +12,9 @@ export {
   clientRegistration,
   requestToken,
   authorizeToken,
-  accessToken
+  accessToken,
+  changeFieldValue,
+  setoauthState,
 } from './oauth.actions';
 
 export {

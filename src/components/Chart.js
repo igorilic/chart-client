@@ -86,10 +86,8 @@ class ChartComponent extends PureComponent {
     tooltip: {
       trigger: 'axis',
       formatter: params => {
-        const d = moment(params[0].data[0]);
-        let output = `<p>Date: <b>${moment(params[0].data[0]).format('D-M-YYYY HH:mm')}</b></p>
+        return `<p>Date: <b>${moment(params[0].data[0]).format('D-M-YYYY HH:mm')}</b></p>
         <i style="text-align: left">Power: <b>${params[0].data[1]}<b></i>`;
-        return output;
       },
     },
     toolbox: {
@@ -109,39 +107,6 @@ class ChartComponent extends PureComponent {
       right: '10%'
     },
   });
-  // getOption = () => {
-  //   return {
-  //     title: {
-  //       text: '',
-  //     },
-  //     tooltip: {
-  //       trigger: 'axis',
-  //       axisPointer: {
-  //         type: 'shadow',
-  //         label: {
-  //           show: true
-  //         }
-  //       }
-  //     },
-  //     toolbox: {
-  //       show: true,
-  //       feature: {
-  //         mark: { show: true },
-  //         dataView: { show: true, readOnly: false },
-  //         magicType: { show: true, type: ['line', 'bar'] },
-  //         restore: { show: true },
-  //         saveAsImage: { show: true }
-  //       }
-  //     },
-  //     calculable: true,
-  //     legend: {
-  //       data: ['Day', 'Power'],
-  //     },
-  //     radar: {
-  //       indicator:
-  //     }
-  //   }
-  // }
 
   render() {
     return (

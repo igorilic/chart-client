@@ -18,8 +18,8 @@ import {
   AUTH_REQUEST_TOKEN_FAILURE,
   AUTH_REQUEST_TOKEN_REQUEST,
   AUTH_REQUEST_TOKEN_SUCCESS,
-  USERNAME,
-  PASSWORD,
+  AUTH_FORM_CHANGE,
+  AUTH_SET_AUTH_STATE,
   BASE_URL,
 } from '../constants';
 
@@ -29,6 +29,20 @@ const config = {
   headers: {
     'Accept': 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
   }
+};
+
+export const setoauthState = (state) => {
+  return {
+    type: AUTH_SET_AUTH_STATE,
+    payload: {state}
+  };
+};
+
+export const changeFieldValue = (id, value) => {
+  return {
+    type: AUTH_FORM_CHANGE,
+    payload: {id, value}
+  };
 };
 
 const clientRegistrationSuccess = (data) => {
@@ -154,7 +168,7 @@ const authorizeTokenFailure = (error) => {
   }
 }
 
-export const authorizeToken = (oauth_token) => {
+export const authorizeToken = (oauth_token, USERNAME, PASSWORD) => {
   return dispatch => {
     dispatch({type: AUTH_AUTHORIZE_TOKEN_REQUEST});
     const url = encodeURI(`${BASE_URL}/oauth1/authorize?oauth_token=${oauth_token}&email=${USERNAME}&password=${PASSWORD}`);

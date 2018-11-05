@@ -4,7 +4,7 @@ import {
 } from '../utils';
 import oauthSignature from 'oauth-signature';
 
-import { 
+import {
   METERS_FETCH_REQUEST,
   METERS_FETCH_SUCCESS,
   METERS_FETCH_FAILURE,
@@ -144,42 +144,57 @@ const readingsFetchFailure = (error) => {
   }
 }
 
-export const readingFetch = (oauthHeaders, consumerSecret, tokenSecret, meterId) => {
+// export const readingFetch = (oauthHeaders, consumerSecret, tokenSecret, meterId) => {
+//   return dispatch => {
+//     dispatch({type: READINGS_FETCH_REQUEST});
+//     const timestamp = Math.round((new Date()).getTime() / 1000).toString();
+//     const from = timestamp - 86400;
+//     const urlForSig =`${BASE_URL}/readings`;
+//     const url = encodeURI(`${BASE_URL}/readings?email=${USERNAME}&password=${PASSWORD}&meterId=${meterId}&from=${from}`);
+//     let parameters = {
+//       ...oauthHeaders,
+//       oauth_nonce: uuid(),
+//       oauth_timestamp: timestamp,
+//     };
+//     delete parameters.oauth_signature;
+//     delete parameters.oauth_verifier;
+//     const sig = oauthSignature.generate('GET', urlForSig, parameters, consumerSecret, tokenSecret);
+//     parameters.oauth_signature = sig;
+//     let oAuth = [];
+//     Object.keys(parameters).forEach(key => {
+//       oAuth.push(`${key}="${parameters[key]}"`)
+//     });
+//     const authorizationHeaders = `OAuth ${oAuth.join(', ')}`;
+//     const configRequestHeaders = {
+//       ...config,
+//       headers: {
+//         ...config.headers,
+//         'Authorization': authorizationHeaders
+//       }
+//     };
+//     const options = {
+//       method: 'GET',
+//       headers: configRequestHeaders.headers,
+//       url
+//     };
+//     return axios(options)
+//       .then(
+//         response => dispatch(readingsFetchSuccess(response.data)),
+//         error => dispatch(readingsFetchFailure(error))
+//       )
+//       .catch(
+//         error => dispatch(readingsFetchFailure(error))
+//       );
+//   }
+// }
+
+export const readingFetch = () => {
   return dispatch => {
     dispatch({type: READINGS_FETCH_REQUEST});
-    const timestamp = Math.round((new Date()).getTime() / 1000).toString();
-    const from = timestamp - 86400;
-    const urlForSig =`${BASE_URL}/readings`; 
-    const url = encodeURI(`${BASE_URL}/readings?email=${USERNAME}&password=${PASSWORD}&meterId=${meterId}&from=${from}`);
-    let parameters = {
-      ...oauthHeaders,
-      oauth_nonce: uuid(),
-      oauth_timestamp: timestamp,
-    };
-    delete parameters.oauth_signature;
-    delete parameters.oauth_verifier;
-    const sig = oauthSignature.generate('GET', urlForSig, parameters, consumerSecret, tokenSecret);
-    parameters.oauth_signature = sig;
-    let oAuth = [];
-    Object.keys(parameters).forEach(key => {
-      oAuth.push(`${key}="${parameters[key]}"`)
-    });
-    const authorizationHeaders = `OAuth ${oAuth.join(', ')}`;
-    const configRequestHeaders = {
-      ...config,
-      headers: {
-        ...config.headers,
-        'Authorization': authorizationHeaders
-      }
-    };
-    const options = {
-      method: 'GET',
-      headers: configRequestHeaders.headers,
-      url
-    };
-    return axios(options)
+    const url = 'api/power.json';
+    return axios.get(url)
       .then(
-        response => dispatch(readingsFetchSuccess(response.data)),
+        response => dispatch(readingsFetchSuccess(response.data.result[0].values)),
         error => dispatch(readingsFetchFailure(error))
       )
       .catch(

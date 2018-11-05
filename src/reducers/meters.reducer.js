@@ -1,4 +1,4 @@
-import { 
+import {
   METERS_FETCH_REQUEST,
   METERS_FETCH_SUCCESS,
   FIELDS_FETCH_REQUEST,
@@ -8,12 +8,29 @@ import {
 } from '../constants';
 
 import moment from 'moment';
+import echarts from 'echarts';
 
-const initialState = {
+export function mapToCharts(data) {
+  let returnData = [];
+  const startTime = data[0].time;
+  data.map((val, idx) => {
+    const t = idx === 0 ? startTime : startTime + idx * val.time;
+    const temp = [t, val.value];
+    returnData = [
+      ...returnData,
+      temp
+    ];
+    return val;
+  });
+  return returnData;
+}
+
+export const initialState = {
   isFetching: false,
   meters: [],
-  fields: null,
-  readings: []
+  isClicked: false,
+  readings: [],
+  fields: null
 };
 
 function mapToChart(arr, color) {
@@ -69,7 +86,12 @@ export const meters = (state = initialState, action) => {
     case READINGS_FETCH_SUCCESS:
       return {
         ...state,
+<<<<<<< HEAD
+        isClicked: true,
+        readings: mapToCharts(action.payload.data),
+=======
         readings: mapToChart(action.payload.data, action.payload.color),
+>>>>>>> master
         isFetching: false
       }
     default:

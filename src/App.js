@@ -1,10 +1,6 @@
-import React, {
-  Component
-} from 'react';
-import {
-  connect
-} from 'react-redux';
-import LineComponent from './components/Line';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ChartComponent from './components/Chart';
 import './App.css';
 
 import {
@@ -28,59 +24,73 @@ const actions = {
 };
 
 class App extends Component {
-
   async componentDidMount() {
-    this.auth();   
+    this.auth();
   }
 
   async auth() {
-    await this.props.clientRegistration();
-    await this.props.requestToken(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret);
-    await this.props.authorizeToken(this.props.oauth.responseRequestToken.oauth_token);
-    await this.props.accessToken(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseRequestToken.oauth_token_secret);
+    // await this.props.clientRegistration();
+    // await this.props.requestToken(
+    //   this.props.oauth.oauthHeaders,
+    //   this.props.oauth.responseRegistration.secret,
+    // );
+    // await this.props.authorizeToken(this.props.oauth.responseRequestToken.oauth_token);
+    // await this.props.accessToken(
+    //   this.props.oauth.oauthHeaders,
+    //   this.props.oauth.responseRegistration.secret,
+    //   this.props.oauth.responseRequestToken.oauth_token_secret,
+    // );
   }
 
   getMeters() {
-    this.props.metersFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret);
+    this.props.metersFetch(
+      this.props.oauth.oauthHeaders,
+      this.props.oauth.responseRegistration.secret,
+      this.props.oauth.responseAccessToken.oauth_token_secret,
+    );
   }
 
   getReadings() {
-    debugger;
-    this.props.readingFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret, this.props.meters.meters[0].meterId)
+    this.props.readingFetch();
+    // this.props.readingFetch(
+    //   this.props.oauth.oauthHeaders,
+    //   this.props.oauth.responseRegistration.secret,
+    //   this.props.oauth.responseAccessToken.oauth_token_secret,
+    //   this.props.meters.meters[0].meterId,
+    // );
   }
 
-
   render() {
-    const {
-      responseRegistration,
-      isFetching
-    } = this.props.oauth;
+    const { responseRegistration, isFetching } = this.props.oauth;
     return (
-        <div className = "App">
-          <div className = "App-container" >
-            <header className = "App-header"> Discovergy Demo Client </header>
-            <button onClick={this.getMeters.bind(this)}>Press me</button>
-            {this.props.meters.meters.length
-              ? <button onClick={this.getReadings.bind(this)}>Press me</button>
-              : <p>Get meters first</p>
-            }
-            <div className = "App-chart">
-              <LineComponent />
-            </div>
+      <div className="App">
+        <div className="App-container">
+          <header className="App-header"> Discovergy Demo Client </header>
+          {/* <button onClick={this.getMeters.bind(this)}>Press me</button> */}
+          {/* {this.props.meters.meters.length ? ( */}
+            <button style={{height: '50px', width: '150px', marginTop: '20px'}} onClick={this.getReadings.bind(this)}>Press for chart</button>
+          {/* ) : ( */}
+            {/* <p>Get meters first</p> */}
+          {/* )} */}
+          <div className="App-chart">
+           {this.props.meters.readings.length ?
+             <ChartComponent chartData={this.props.meters.readings} />
+            : '' }
           </div>
         </div>
+      </div>
     );
   }
 }
 
-function mapStateToProps({
-  oauth,
-  meters
-}) {
+function mapStateToProps({ oauth, meters }) {
   return {
     oauth,
-    meters
+    meters,
   };
 }
 
-export default connect(mapStateToProps, actions)(App);
+export default connect(
+  mapStateToProps,
+  actions,
+)(App);

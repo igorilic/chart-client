@@ -1,4 +1,4 @@
-import { 
+import {
   METERS_FETCH_REQUEST,
   METERS_FETCH_SUCCESS,
   FIELDS_FETCH_REQUEST,
@@ -7,10 +7,30 @@ import {
   READINGS_FETCH_SUCCESS,
 } from '../constants';
 
-const initialState = {
+import moment from 'moment';
+import echarts from 'echarts';
+
+export function mapToCharts(data) {
+  let returnData = [];
+  const startTime = data[0].time;
+  data.map((val, idx) => {
+    const t = idx === 0 ? startTime : startTime + idx * val.time;
+    const temp = [t, val.value];
+    returnData = [
+      ...returnData,
+      temp
+    ];
+    return val;
+  });
+  return returnData;
+}
+
+export const initialState = {
   isFetching: false,
   meters: [],
-  fields: null 
+  isClicked: false,
+  readings: [],
+  fields: null
 };
 
 export const meters = (state = initialState, action) => {
@@ -45,7 +65,8 @@ export const meters = (state = initialState, action) => {
     case READINGS_FETCH_SUCCESS:
       return {
         ...state,
-        readings: action.payload.data,
+        isClicked: true,
+        readings: mapToCharts(action.payload.data),
         isFetching: false
       }
     default:

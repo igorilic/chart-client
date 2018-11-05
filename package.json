@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/legends": "^0.50.0",
-    "@nivo/line": "^0.50.0",
     "axios": "^0.18.0",
+    "echarts": "^4.2.0-rc.2",
+    "echarts-for-react": "^2.0.15-beta.0",
+    "moment": "^2.22.2",
     "oauth-signature": "^1.5.0",
     "qs": "^6.5.2",
     "react": "^16.6.0",

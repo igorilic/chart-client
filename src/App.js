@@ -45,16 +45,12 @@ class App extends Component {
   }
 
   getReadings() {
-    debugger;
-    this.props.readingFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret, this.props.meters.meters[0].meterId)
+    // this.props.readingFetch(this.props.oauth.oauthHeaders, this.props.oauth.responseRegistration.secret, this.props.oauth.responseAccessToken.oauth_token_secret, this.props.meters.meters[0].meterId)
+    this.props.readingFetch('hsl(286, 70%, 50%)');
   }
 
 
   render() {
-    const {
-      responseRegistration,
-      isFetching
-    } = this.props.oauth;
     return (
         <div className = "App">
           <div className = "App-container" >
@@ -64,9 +60,13 @@ class App extends Component {
               ? <button onClick={this.getReadings.bind(this)}>Press me</button>
               : <p>Get meters first</p>
             }
-            <div className = "App-chart">
-              <LineComponent />
-            </div>
+            {this.props.meters.readings.length
+              ? <div className = "App-chart">
+                  <LineComponent readings={this.props.meters.readings[0]} />
+                </div>
+              : ''
+            }
+            
           </div>
         </div>
     );

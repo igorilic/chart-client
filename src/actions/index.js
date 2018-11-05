@@ -18,5 +18,9 @@ export {
 export {
   metersFetch,
   fieldsFetch,
-  readingFetch,
+  // readingFetch,
 } from './meters';
+
+export {
+  readingFetch
+} from './fake';

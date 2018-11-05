@@ -5,6 +5,7 @@
 .App-container {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .App-header {
@@ -33,4 +34,26 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.form--group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+}
+
+.form .form--group .form--group--label {
+  font-size: 12px;
+  padding: 5px;
 }

@@ -67,8 +67,18 @@ class App extends Component {
         <div className="App-container">
           <header className="App-header"> Discovergy Demo Client </header>
           {/* <button onClick={this.getMeters.bind(this)}>Press me</button> */}
+          <div className="form">
+            <div className="form--group">
+              <label className="form--group--label" htmlFor="username">Username or Email</label>
+              <input type="text" className="form--group--input" id="username" />
+            </div>
+            <div className="form--group">
+              <label className="form--group--label" htmlFor="password">Password</label>
+              <input type="password" className="form--group--input" id="password" />
+            </div>
+          </div>
           {/* {this.props.meters.meters.length ? ( */}
-            <button style={{height: '50px', width: '150px', marginTop: '20px'}} onClick={this.getReadings.bind(this)}>Press for chart</button>
+            <button style={{height: '40px', width: '150px', marginTop: '20px', marginLeft: '20px'}} onClick={this.getReadings.bind(this)}>Press for chart</button>
           {/* ) : ( */}
             {/* <p>Get meters first</p> */}
           {/* )} */}

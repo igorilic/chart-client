@@ -101,7 +101,7 @@ class ChartComponent extends PureComponent {
           title: 'Data Zoom'
         },
         mark: { show: true, title: 'Mark' },
-        dataView: { show: true, readOnly: false, title: 'Data View' },
+        // dataView: { show: true, readOnly: false, title: 'Data View' },
         magicType: { show: true, type: ['line', 'bar'], title: { line: 'Line Chart', bar: 'Bar Chart'}},
         restore: { show: true, title: 'Restore' },
         saveAsImage: { show: true, title: 'Save as Image' },

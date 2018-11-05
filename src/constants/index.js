@@ -1,4 +1,4 @@
-export { USERNAME, PASSWORD, BASE_URL } from './secrets';
+export { BASE_URL } from './secrets';
 export const DUMMY_ACTION = '[CHART] Dummy';
 
 // auth

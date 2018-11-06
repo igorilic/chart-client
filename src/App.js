@@ -136,7 +136,7 @@ class App extends Component {
           }
           {!this.props.oauth.loggedIn 
             ? <button style={{height: '40px', width: '150px', marginTop: '20px', marginLeft: '20px'}} onClick={this.auth.bind(this)}>Login</button>
-            : <div><p>You are logged in!</p><button style={{height: '40px', width: '150px', marginTop: '20px', marginLeft: '20px'}} onClick={this.logout.bind(this)}>Logout</button></div>
+            : <div style={{textAlign: 'left'}}><p style={{marginLeft: '20px'}}>You are logged in!</p><button style={{height: '40px', width: '150px', marginTop: '20px', marginLeft: '20px'}} onClick={this.logout.bind(this)}>Logout</button></div>
           }
           <div className="App-chart">
            {this.props.meters.readings.length ?

@@ -9,6 +9,35 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
 class ChartComponent extends PureComponent {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      totalPower: 0,
+      isSelected: false,
+      data: this.props.chartData
+    };
+  }
+  componentDidMount() {
+    this.echarts_react.getEchartsInstance().on('brushselected', this.renderBrushed.bind(this));
+  }
+  renderBrushed(params) {
+    this.setState({ isSelected: false });
+    const val = this.state.data;
+    const { areas } = params.batch[0];
+    if (areas.length) {
+      const leftSelected = params.batch[0].areas[0].coordRange[0];
+      const rightSelected = params.batch[0].areas[0].coordRange[1];
+      let sum = 0;
+      val.forEach(i => {
+        if (i[0] >= leftSelected && i[0] <= rightSelected) {
+          sum += i[1];
+        }
+      });
+      this.setState({ totalPower: sum, isSelected: true })
+
+    }
+  }
   getOption = data => ({
     color: ['#21ba45'],
     calculable: true,
@@ -36,11 +65,21 @@ class ChartComponent extends PureComponent {
         type: 'value',
       },
     ],
+    brush: {
+      transformable: true,
+      xAxisIndex: 'all',
+      brushLink: 'all',
+      outOfBrush: {
+          colorAlpha: 0.1
+      }
+    },
     dataZoom: [
       {
         type: 'inside',
         start: 0,
         end: 10,
+        xAxisIndex: [0],
+        filterMode: 'empty'
       },
       {
         start: 0,
@@ -77,11 +116,12 @@ class ChartComponent extends PureComponent {
         },
         data,
       },
+      
     ],
     title: {
       text: 'Power',
       subtext: 'Discovergy',
-      left: '10%'
+      left: '10%',
     },
     tooltip: {
       trigger: 'axis',
@@ -94,12 +134,17 @@ class ChartComponent extends PureComponent {
       show: true,
       showTitle: true,
       feature: {
+        brush: {
+          type: ['lineX', 'clear'],
+          title: {
+            lineX: 'Select and calculate',
+            clear: 'Clear select'
+          }
+        },
         dataZoom: {
           yAxisIndex: 'none',
           title: 'Data Zoom'
         },
-        mark: { show: true, title: 'Mark' },
-        // dataView: { show: true, readOnly: false, title: 'Data View' },
         magicType: { show: true, type: ['line', 'bar'], title: { line: 'Line Chart', bar: 'Bar Chart'}},
         restore: { show: true, title: 'Restore' },
         saveAsImage: { show: true, title: 'Save as Image' },
@@ -110,12 +155,18 @@ class ChartComponent extends PureComponent {
 
   render() {
     return (
-      <ReactEchartsCore
-        ref={e => {
-          this.echarts_react = e;
-        }}
-        option={this.getOption(this.props.chartData)}
-      />
+      <div>
+        {this.state.isSelected
+        ? <div><h3>Total power selected: {this.state.totalPower}</h3></div>
+        : ''
+        }
+        <ReactEchartsCore
+          ref={e => {
+            this.echarts_react = e;
+          }}
+          option={this.getOption(this.props.chartData)}
+        />
+      </div>
     );
   }
 }

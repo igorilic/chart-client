@@ -13,7 +13,8 @@ import {
   fieldsFetch,
   readingFetch,
   changeFieldValue,
-  setoauthState
+  setoauthState,
+  authLogout
 } from './actions';
 import qs from 'qs';
 const actions = {
@@ -25,16 +26,18 @@ const actions = {
   fieldsFetch,
   readingFetch,
   changeFieldValue,
-  setoauthState
+  setoauthState,
+  authLogout
 };
 
 class App extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     const {cookies} = this.props;
     if (cookies.get('discovergy')) {
-      this.props.setoauthState('login');
+      await this.props.setoauthState('login');
+      await this.auth();
     } else {
-      this.props.setoauthState('logout');
+      await this.props.setoauthState('logout');
     }
   }
 
@@ -68,7 +71,15 @@ class App extends Component {
     await this.getReadings();
   }
 
+  logout() {
+    this.props.cookies.remove('discovergy');
+    this.props.authLogout();
+  }
+
   getMeters() {
+    // const oauthHeaders = this.props.oauth.loggedIn 
+    //   ? this.putCookieInState(this.props.cookies.get('discovergy'))
+    //   :
     this.props.metersFetch(
       this.props.oauth.oauthHeaders,
       this.props.oauth.responseRegistration.secret,
@@ -125,7 +136,7 @@ class App extends Component {
           }
           {!this.props.oauth.loggedIn 
             ? <button style={{height: '40px', width: '150px', marginTop: '20px', marginLeft: '20px'}} onClick={this.auth.bind(this)}>Login</button>
-            : <p>You are logged in!</p>
+            : <div><p>You are logged in!</p><button style={{height: '40px', width: '150px', marginTop: '20px', marginLeft: '20px'}} onClick={this.logout.bind(this)}>Logout</button></div>
           }
           <div className="App-chart">
            {this.props.meters.readings.length ?

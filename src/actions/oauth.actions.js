@@ -20,6 +20,7 @@ import {
   AUTH_REQUEST_TOKEN_SUCCESS,
   AUTH_FORM_CHANGE,
   AUTH_SET_AUTH_STATE,
+  AUTH_LOGOUT,
   BASE_URL,
 } from '../constants';
 
@@ -30,7 +31,11 @@ const config = {
     'Accept': 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
   }
 };
-
+export const authLogout = () => {
+  return {
+    type: AUTH_LOGOUT,
+  };
+};
 export const setoauthState = (state) => {
   return {
     type: AUTH_SET_AUTH_STATE,

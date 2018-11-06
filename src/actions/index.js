@@ -15,6 +15,7 @@ export {
   accessToken,
   changeFieldValue,
   setoauthState,
+  authLogout,
 } from './oauth.actions';
 
 export {

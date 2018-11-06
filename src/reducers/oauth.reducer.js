@@ -13,6 +13,7 @@ import {
   AUTH_REQUEST_TOKEN_SUCCESS,
   AUTH_FORM_CHANGE,
   AUTH_SET_AUTH_STATE,
+  AUTH_LOGOUT,
 } from '../constants';
 
 export const initialState = {
@@ -56,10 +57,23 @@ export const initialState = {
 
 export const oauth = (state = initialState, action) => {
   switch (action.type) {
+    case AUTH_LOGOUT:
+      return {
+        ...state,
+        loggedIn: false,
+        cookie: {},
+        oauthHeaders: {
+          ...initialState.oauthHeaders
+        },
+      }
     case AUTH_SET_AUTH_STATE:
       return {
         ...state,
-        loggedIn: action.payload.state === 'login' ? true : false
+        loggedIn: action.payload.state === 'login' ? true : false,
+        form: {
+          username: '',
+          password: ''
+        }
       }
     case AUTH_FORM_CHANGE:
       return {

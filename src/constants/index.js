@@ -35,6 +35,7 @@ export const FIELDS_FETCH_FAILURE = '[FIELDS] Fetch Failure';
 
 // form
 export const AUTH_FORM_CHANGE = '[AUTH] Form Change';
+export const AUTH_LOGOUT = '[AUTH] Logout';
 
 // cookies
 export const AUTH_SET_AUTH_STATE = '[AUTH] Set auth state';

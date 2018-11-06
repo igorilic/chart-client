@@ -1,4 +1,4 @@
-export { BASE_URL } from './secrets';
+export { BASE_URL } from './api';
 export const DUMMY_ACTION = '[CHART] Dummy';
 
 // auth
